@@ -1,19 +1,20 @@
 package co.sofka.challenge_jr.domain.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
-import co.sofka.challenge_jr.domain.values.*;
+import co.sofka.challenge_jr.application.repositories.models.ProductsBuyView;
 
+import java.util.Date;
 import java.util.Set;
 
 public class ProductsBought extends DomainEvent {
-  private final BuyID buyID;
-  private final Set<ProductsBuy> productsBuy;
-  private final DateBuy date;
-  private final ClientName name;
-  private final IDType idType;
-  private final IDClient idClient;
+  private final String buyID;
+  private final Set<ProductsBuyView> productsBuy;
+  private final Date date;
+  private final String name;
+  private final String idType;
+  private final String idClient;
 
-  public ProductsBought(BuyID buyID, Set<ProductsBuy> productsBuy, DateBuy date, ClientName name, IDType idType, IDClient idClient) {
+  public ProductsBought(String buyID, Set<ProductsBuyView> productsBuy, Date date, String name, String idType, String idClient) {
     super("sofka.Inventory.ProductBought");
     this.buyID = buyID;
     this.productsBuy = productsBuy;
@@ -23,27 +24,27 @@ public class ProductsBought extends DomainEvent {
     this.idClient = idClient;
   }
 
-  public Set<ProductsBuy> getProductsBuy() {
+  public Set<ProductsBuyView> getProductsBuy() {
     return productsBuy;
   }
 
-  public DateBuy getDate() {
+  public Date getDate() {
     return date;
   }
 
-  public ClientName getName() {
+  public String getName() {
     return name;
   }
 
-  public IDType getIdType() {
+  public String getIdType() {
     return idType;
   }
 
-  public IDClient getIdClient() {
+  public String getIdClient() {
     return idClient;
   }
 
-  public BuyID getBuyID() {
+  public String getBuyID() {
     return buyID;
   }
 }

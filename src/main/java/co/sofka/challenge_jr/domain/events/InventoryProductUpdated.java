@@ -1,24 +1,22 @@
 package co.sofka.challenge_jr.domain.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
-import co.sofka.challenge_jr.domain.values.InInventory;
-import co.sofka.challenge_jr.domain.values.ProductID;
 
 public class InventoryProductUpdated extends DomainEvent {
-  private final ProductID productID;
-  private final InInventory inInventory;
+  private final String productID;
+  private final Integer inInventory;
 
-  public InventoryProductUpdated(ProductID productID, InInventory inInventory) {
+  public InventoryProductUpdated(String productID, Integer inInventory) {
     super("sofka.Inventory.InventoryProductUpdated");
     this.productID = productID;
     this.inInventory = inInventory;
   }
 
-  public ProductID getProductID() {
+  public String getProductID() {
     return productID;
   }
 
-  public InInventory getInInventory() {
+  public Integer getInInventory() {
     return inInventory;
   }
 }

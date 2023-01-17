@@ -1,16 +1,15 @@
 package co.sofka.challenge_jr.domain.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
-import co.sofka.challenge_jr.domain.values.*;
 
 public class ProductAdded extends DomainEvent {
-  private final ProductID productID;
-  private final Name name;
-  private final InInventory inInventory;
-  private final Enabled enabled;
-  private final Min min;
-  private final Max max;
-  public ProductAdded(ProductID productID, Name name, InInventory inInventory, Enabled enabled, Min min, Max max) {
+  private final String productID;
+  private final String name;
+  private final Integer inInventory;
+  private final Boolean enabled;
+  private final Integer min;
+  private final Integer max;
+  public ProductAdded(String productID, String name, Integer inInventory, Boolean enabled, Integer min, Integer max) {
     super("sofka.Inventory.ProductAdded");
     this.productID = productID;
     this.name = name;
@@ -20,27 +19,27 @@ public class ProductAdded extends DomainEvent {
     this.max = max;
   }
 
-  public ProductID getProductID() {
+  public String getProductID() {
     return productID;
   }
 
-  public Name getName() {
+  public String getName() {
     return name;
   }
 
-  public InInventory getInInventory() {
+  public Integer getInInventory() {
     return inInventory;
   }
 
-  public Enabled getEnabled() {
+  public Boolean getEnabled() {
     return enabled;
   }
 
-  public Min getMin() {
+  public Integer getMin() {
     return min;
   }
 
-  public Max getMax() {
+  public Integer getMax() {
     return max;
   }
 }

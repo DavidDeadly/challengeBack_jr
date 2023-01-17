@@ -47,21 +47,21 @@ public class Product extends Entity<ProductID> {
     this.min = min;
   }
 
-  public void rename(Name name) {
-    this.name = name;
+  public void rename(String name) {
+    this.name = new Name(name);
   }
 
   public void buy(Integer quantity) {
-    final Integer min = this.min.value();
-    final Integer max = this.max.value();
-    final Integer newInInventory = this.inInventory.value() - quantity;
+    final Integer minBuy = this.min.value();
+    final Integer maxBuy = this.max.value();
+    final int newInInventory = this.inInventory.value() - quantity;
 
-    if(quantity < min) {
-      throw new IllegalArgumentException("The minimum quantity to buy this product is " + min);
+    if(quantity < minBuy) {
+      throw new IllegalArgumentException("The minimum quantity to buy this product is " + minBuy);
     }
 
-    if(quantity > max) {
-      throw new IllegalArgumentException("The maximum quantity to buy this product is " + max);
+    if(quantity > maxBuy) {
+      throw new IllegalArgumentException("The maximum quantity to buy this product is " + maxBuy);
     }
 
     if(newInInventory < 0) {

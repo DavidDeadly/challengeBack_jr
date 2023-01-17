@@ -2,7 +2,7 @@ package co.sofka.challenge_jr.business.usecases;
 
 import co.com.sofka.domain.generic.DomainEvent;
 import co.sofka.challenge_jr.business.gateways.CommandExecutor;
-import co.sofka.challenge_jr.business.gateways.DomainEventRepository;
+import co.sofka.challenge_jr.business.gateways.DomainRepository;
 import co.sofka.challenge_jr.domain.Inventory;
 import co.sofka.challenge_jr.domain.commands.DeleteProduct;
 import co.sofka.challenge_jr.domain.values.InventoryID;
@@ -13,9 +13,9 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class DeleteProductUseCase implements CommandExecutor<DeleteProduct> {
-  private final DomainEventRepository repository;
+  private final DomainRepository repository;
 
-  public DeleteProductUseCase(DomainEventRepository repository) {
+  public DeleteProductUseCase(DomainRepository repository) {
     this.repository = repository;
   }
 
@@ -35,6 +35,8 @@ public class DeleteProductUseCase implements CommandExecutor<DeleteProduct> {
                   inventory.deleteProduct(
                           new ProductID(command.getProductID())
                   );
+
+                  new Thread(() -> repository.saveView(inventory).subscribe()).start();
 
                   return inventory.getUncommittedChanges();
                 }))

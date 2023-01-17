@@ -2,7 +2,7 @@ package co.sofka.challenge_jr.business.usecases;
 
 import co.com.sofka.domain.generic.DomainEvent;
 import co.sofka.challenge_jr.business.gateways.CommandExecutor;
-import co.sofka.challenge_jr.business.gateways.DomainEventRepository;
+import co.sofka.challenge_jr.business.gateways.DomainRepository;
 import co.sofka.challenge_jr.domain.Inventory;
 import co.sofka.challenge_jr.domain.commands.CreateInventory;
 import co.sofka.challenge_jr.domain.values.InventoryID;
@@ -13,9 +13,9 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class CreateInventoryUseCase implements CommandExecutor<CreateInventory> {
-  private final DomainEventRepository repository;
+  private final DomainRepository repository;
 
-  public CreateInventoryUseCase(DomainEventRepository repository) {
+  public CreateInventoryUseCase(DomainRepository repository) {
     this.repository = repository;
   }
 
@@ -28,6 +28,8 @@ public class CreateInventoryUseCase implements CommandExecutor<CreateInventory> 
                       new InventoryID(command.getInventoryId()),
                       new Name(command.getName())
               );
+
+              new Thread(() -> repository.saveView(inventory).subscribe()).start();
 
               return inventory.getUncommittedChanges();
             })

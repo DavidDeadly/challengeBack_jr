@@ -1,24 +1,22 @@
 package co.sofka.challenge_jr.domain.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
-import co.sofka.challenge_jr.domain.values.Min;
-import co.sofka.challenge_jr.domain.values.ProductID;
 
 public class ProductMinUpdated extends DomainEvent {
-  private final ProductID productID;
-  private final Min min;
+  private final String productID;
+  private final Integer min;
 
-  public ProductMinUpdated(ProductID productID, Min min) {
+  public ProductMinUpdated(String productID, Integer min) {
     super("sofka.Inventory.ProductMinUpdated");
     this.productID = productID;
     this.min = min;
   }
 
-  public ProductID getProductID() {
+  public String getProductID() {
     return productID;
   }
 
-  public Min getMin() {
+  public Integer getMin() {
     return min;
   }
 }
