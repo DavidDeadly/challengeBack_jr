@@ -1,7 +1,6 @@
 package co.sofka.challenge_jr.domain.commands;
 
 import co.com.sofka.domain.generic.Command;
-import co.sofka.challenge_jr.domain.values.*;
 
 import java.time.Instant;
 import java.util.Date;
@@ -9,23 +8,23 @@ import java.util.Set;
 import java.util.UUID;
 
 public class BuyProducts extends Command {
-  private final InventoryID inventoryID;
-  private final BuyID buyID = new BuyID(UUID.randomUUID().toString());
-  private final Set<ProductsBuy> productsBuy;
-  private final DateBuy date = new DateBuy(Date.from(Instant.now()));
-  private final ClientName name;
-  private final IDType idType;
-  private final IDClient idClient;
+  private final String inventoryID;
+  private final String buyID = UUID.randomUUID().toString();
+  private final Set<BuyProducts.ProductsBuy> productsBuy;
+  private final Date date = Date.from(Instant.now());
+  private final String clientName;
+  private final String idType;
+  private final String idClient;
 
-  public BuyProducts(InventoryID inventoryID, Set<ProductsBuy> productsBuy, ClientName name, IDType idType, IDClient idClient) {
+  public BuyProducts(String inventoryID, Set<BuyProducts.ProductsBuy> productsBuy, String clientName, String idType, String idClient) {
     this.inventoryID = inventoryID;
     this.productsBuy = productsBuy;
-    this.name = name;
+    this.clientName = clientName;
     this.idType = idType;
     this.idClient = idClient;
   }
 
-  public InventoryID getInventoryID() {
+  public String getInventoryID() {
     return inventoryID;
   }
 
@@ -33,23 +32,41 @@ public class BuyProducts extends Command {
     return productsBuy;
   }
 
-  public DateBuy getDate() {
+  public Date getDate() {
     return date;
   }
 
-  public ClientName getName() {
-    return name;
+  public String getClientName() {
+    return clientName;
   }
 
-  public IDType getIdType() {
+  public String getIdType() {
     return idType;
   }
 
-  public IDClient getIdClient() {
+  public String getIdClient() {
     return idClient;
   }
 
-  public BuyID getBuyID() {
+  public String getBuyID() {
     return buyID;
+  }
+
+  public class ProductsBuy {
+    private final String productId;
+    private final Integer quantity;
+
+    public ProductsBuy(String productId, Integer quantity) {
+      this.productId = productId;
+      this.quantity = quantity;
+    }
+
+    public String getProductId() {
+      return productId;
+    }
+
+    public Integer getQuantity() {
+      return quantity;
+    }
   }
 }

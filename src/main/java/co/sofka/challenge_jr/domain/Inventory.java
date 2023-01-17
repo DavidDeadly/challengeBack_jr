@@ -31,35 +31,31 @@ public class Inventory extends AggregateEvent<InventoryID> {
     return inventory;
   }
 
-  public void AddProduct(ProductID productID, Name name, InInventory inInventory, Enabled enabled, Min min, Max max) {
+  public void addProduct(ProductID productID, Name name, InInventory inInventory, Enabled enabled, Min min, Max max) {
     appendChange(new ProductAdded(productID, name, inInventory, enabled, min, max));
   }
 
-  public void DeleteProduct(ProductID productID) {
+  public void deleteProduct(ProductID productID) {
     appendChange(new ProductDeleted(productID));
   }
 
-  public void RenameProduct(ProductID productID, Name name) {
+  public void renameProduct(ProductID productID, Name name) {
     appendChange(new ProductRenamed(productID, name));
   }
 
-  public void IncreaseProductInventory(ProductID productID, InInventory inInventory) {
-    appendChange(new InventoryProductIncreased(productID, inInventory));
+  public void updateProductInventory(ProductID productID, InInventory inInventory) {
+    appendChange(new InventoryProductUpdated(productID, inInventory));
   }
 
-  public void DecreaseProductInventory(ProductID productID, InInventory inInventory) {
-    appendChange(new InventoryProductDecreased(productID, inInventory));
-  }
-
-  public void UpdateProductMax(ProductID productID, Max max) {
+  public void updateProductMax(ProductID productID, Max max) {
     appendChange(new ProductMaxUpdated(productID, max));
   }
 
-  public void UpdateProductMin(ProductID productID, Min min) {
+  public void updateProductMin(ProductID productID, Min min) {
     appendChange(new ProductMinUpdated(productID, min));
   }
 
-  public void BuyProduct(BuyID buyID, Set<ProductsBuy> productsBuys, DateBuy date, ClientName clientName, IDType idType, IDClient idClient) {
+  public void buyProducts(BuyID buyID, Set<ProductsBuy> productsBuys, DateBuy date, ClientName clientName, IDType idType, IDClient idClient) {
     appendChange(new ProductsBought(buyID, productsBuys, date, clientName, idType, idClient));
   }
 
@@ -69,7 +65,7 @@ public class Inventory extends AggregateEvent<InventoryID> {
             .findFirst();
   }
 
-  public void removeProductById(ProductID productID) {
+  protected void removeProductById(ProductID productID) {
     products.removeIf(product -> product.identity().equals(productID));
   }
 }

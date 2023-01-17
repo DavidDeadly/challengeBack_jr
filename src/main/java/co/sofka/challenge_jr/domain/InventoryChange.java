@@ -2,7 +2,7 @@ package co.sofka.challenge_jr.domain;
 
 import co.com.sofka.domain.generic.EventChange;
 import co.sofka.challenge_jr.domain.events.*;
-import co.sofka.challenge_jr.domain.values.InInventory;
+import co.sofka.challenge_jr.domain.values.ProductID;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -30,14 +30,9 @@ public class InventoryChange extends EventChange {
 
     apply((ProductDeleted event) -> inventory.removeProductById(event.getProductID()));
 
-    apply((InventoryProductIncreased event) -> {
+    apply((InventoryProductUpdated event) -> {
       Optional<Product> productById = inventory.getProductById(event.getProductID());
-      productById.ifPresent(product -> product.increaseInInventory(event.getInInventory()));
-    });
-
-    apply((InventoryProductDecreased event) -> {
-      Optional<Product> productById = inventory.getProductById(event.getProductID());
-      productById.ifPresent(product -> product.decreaseInInventory(event.getInInventory()));
+      productById.ifPresent(product -> product.updateInInventory(event.getInInventory()));
     });
 
     apply((ProductMaxUpdated event) -> {
@@ -57,7 +52,7 @@ public class InventoryChange extends EventChange {
 
     apply((ProductsBought event) -> {
       event.getProductsBuy().forEach(productsBuy -> {
-        Optional<Product> productById = inventory.getProductById(productsBuy.value().idProduct());
+        Optional<Product> productById = inventory.getProductById(new ProductID(productsBuy.value().idProduct()));
         productById.ifPresent(product -> product.buy(productsBuy.value().quantity()));
       });
 

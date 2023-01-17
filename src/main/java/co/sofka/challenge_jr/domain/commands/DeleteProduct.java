@@ -1,23 +1,21 @@
 package co.sofka.challenge_jr.domain.commands;
 
 import co.com.sofka.domain.generic.Command;
-import co.sofka.challenge_jr.domain.values.InventoryID;
-import co.sofka.challenge_jr.domain.values.ProductID;
 
 public class DeleteProduct extends Command {
-  private final InventoryID inventoryID;
-  private final ProductID productID;
+  private final String inventoryID;
+  private final String productID;
 
-  public DeleteProduct(InventoryID inventoryID, ProductID productID) {
+  public DeleteProduct(String inventoryID, String productID) {
     this.inventoryID = inventoryID;
     this.productID = productID;
   }
 
-  public InventoryID getInventoryID() {
+  public String getInventoryID() {
     return inventoryID;
   }
 
-  public ProductID getProductID() {
+  public String getProductID() {
     return productID;
   }
 }

@@ -39,14 +39,6 @@ public class Product extends Entity<ProductID> {
     return max;
   }
 
-  public void increaseInInventory(InInventory inInventory) {
-    this.inInventory = new InInventory(this.inInventory.value() + inInventory.value());
-  }
-
-  public void decreaseInInventory(InInventory inInventory) {
-    this.inInventory = new InInventory(this.inInventory.value() - inInventory.value());
-  }
-
   public void updateMax(Max max) {
     this.max = max;
   }
@@ -77,5 +69,9 @@ public class Product extends Entity<ProductID> {
     }
 
     this.inInventory = new InInventory(newInInventory);
+  }
+
+  public void updateInInventory(InInventory inInventory) {
+    this.inInventory = inInventory;
   }
 }

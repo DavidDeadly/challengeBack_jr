@@ -1,22 +1,20 @@
 package co.sofka.challenge_jr.domain.commands;
 
 import co.com.sofka.domain.generic.Command;
-import java.util.UUID;
 
-public class AddProduct extends Command {
+public class UpdateProduct extends Command {
   private final String inventoryID;
-  private final String productID = UUID.randomUUID().toString();
-  private final String name;
+  private final String productID;
   private final Integer inInventory;
-  private final Boolean enabled;
+  private final String name;
   private final Integer min;
   private final Integer max;
 
-  public AddProduct(String inventoryID, String name, Integer inInventory, Boolean enabled, Integer min, Integer max) {
+  public UpdateProduct(String inventoryID, String productID, Integer inInventory, String name, Integer min, Integer max) {
     this.inventoryID = inventoryID;
-    this.name = name;
+    this.productID = productID;
     this.inInventory = inInventory;
-    this.enabled = enabled;
+    this.name = name;
     this.min = min;
     this.max = max;
   }
@@ -35,10 +33,6 @@ public class AddProduct extends Command {
 
   public Integer getInInventory() {
     return inInventory;
-  }
-
-  public Boolean getEnabled() {
-    return enabled;
   }
 
   public Integer getMin() {

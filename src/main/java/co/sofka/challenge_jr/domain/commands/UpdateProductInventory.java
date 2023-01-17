@@ -2,18 +2,18 @@ package co.sofka.challenge_jr.domain.commands;
 
 import co.com.sofka.domain.generic.Command;
 
-public class UpdateProductMax extends Command {
+public class UpdateProductInventory extends Command {
   private final String inventoryID;
   private final String productID;
-  private final Integer max;
+  private final Integer inInventory;
 
-  public UpdateProductMax(String inventoryID, String productID, Integer max) {
+  public UpdateProductInventory(String inventoryID, String productID, Integer inInventory) {
     this.inventoryID = inventoryID;
     this.productID = productID;
-    this.max = max;
+    this.inInventory = inInventory;
   }
 
-  public String getInventoryID() {
+  public String getString() {
     return inventoryID;
   }
 
@@ -21,7 +21,7 @@ public class UpdateProductMax extends Command {
     return productID;
   }
 
-  public Integer getMax() {
-    return max;
+  public Integer getInInventory() {
+    return inInventory;
   }
 }
