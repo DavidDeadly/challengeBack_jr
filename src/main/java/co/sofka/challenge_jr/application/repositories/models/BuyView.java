@@ -1,21 +1,24 @@
 package co.sofka.challenge_jr.application.repositories.models;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.Date;
 import java.util.Set;
 
 public class BuyView {
+  @Id
   private String buyId;
   private Date date;
   private String idType;
-  private String id;
+  private String clientId;
   private String clientName;
   private Set<ProductsBuyView> products;
 
-  public BuyView(String buyId, Date date, String idType, String id, String clientName, Set<ProductsBuyView> products) {
+  public BuyView(String buyId, Date date, String idType, String clientId, String clientName, Set<ProductsBuyView> products) {
     this.buyId = buyId;
     this.date = date;
     this.idType = idType;
-    this.id = id;
+    this.clientId = clientId;
     this.clientName = clientName;
     this.products = products;
   }
@@ -47,12 +50,12 @@ public class BuyView {
     this.idType = idType;
   }
 
-  public String getId() {
-    return id;
+  public String getClientId() {
+    return clientId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setClientId(String clientId) {
+    this.clientId = clientId;
   }
 
   public String getClientName() {

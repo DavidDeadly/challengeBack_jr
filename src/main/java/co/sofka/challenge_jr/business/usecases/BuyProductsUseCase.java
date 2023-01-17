@@ -30,7 +30,7 @@ public class BuyProductsUseCase implements CommandExecutor<BuyProducts> {
                 .collectList()
                 .flatMapIterable(events -> {
                   Inventory inventory = Inventory.from(
-                          new InventoryID(command.getBuyID()),
+                          new InventoryID(command.getInventoryID()),
                           events
                   );
 

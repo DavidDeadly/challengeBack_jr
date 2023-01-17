@@ -40,11 +40,18 @@ public class Product extends Entity<ProductID> {
   }
 
   public void updateMax(Max max) {
+    if(max.value() < min.value()) {
+      throw new IllegalArgumentException("The max quantity can't be lower than the min");
+    }
     this.max = max;
   }
 
   public void updateMin(Min min) {
+    if(min.value() > max.value()) {
+      throw new IllegalArgumentException("The min quantity can't be greater than the max");
+    }
     this.min = min;
+    checkEnabled();
   }
 
   public void rename(String name) {
@@ -68,10 +75,17 @@ public class Product extends Entity<ProductID> {
       throw new IllegalArgumentException("There's no enough stock of this product");
     }
 
+
     this.inInventory = new InInventory(newInInventory);
+    checkEnabled();
   }
 
   public void updateInInventory(InInventory inInventory) {
     this.inInventory = inInventory;
+    checkEnabled();
+  }
+
+  private void checkEnabled() {
+    this.enabled = new Enabled(inInventory.value() >= min.value());
   }
 }

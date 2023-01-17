@@ -1,5 +1,6 @@
 package co.sofka.challenge_jr.application.routers;
 
+import co.sofka.challenge_jr.business.usecases.GetBuysUseCase;
 import co.sofka.challenge_jr.business.usecases.GetProductsUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,22 @@ public class GetRouter {
                   ServerResponse.ok()
                   .contentType(MediaType.APPLICATION_JSON)
                   .body(BodyInserters.fromValue(inventoryViews)))
+                .onErrorResume(throwable -> ServerResponse.noContent().build())
+    );
+  }
+
+  @Bean
+  public RouterFunction<ServerResponse> getBuys(GetBuysUseCase useCase) {
+    return route(
+            GET("/buys"),
+            request ->
+              useCase.getAll(request.queryParam("id"))
+                .switchIfEmpty(Mono.error(new Throwable()))
+                .collectList()
+                .flatMap(inventoryViews ->
+                        ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromValue(inventoryViews)))
                 .onErrorResume(throwable -> ServerResponse.noContent().build())
     );
   }
