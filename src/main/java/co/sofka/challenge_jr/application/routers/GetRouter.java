@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
+
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -20,13 +22,17 @@ public class GetRouter {
     return route(
             GET("/products"),
             request ->
-              useCase.getAll(request.queryParam("id"))
-                .switchIfEmpty(Mono.error(new Throwable()))
-                .collectList()
-                .flatMap(inventoryViews ->
-                  ServerResponse.ok()
-                  .contentType(MediaType.APPLICATION_JSON)
-                  .body(BodyInserters.fromValue(inventoryViews)))
+              Mono.just(request.queryParam("id"))
+                  .map(Optional::orElseThrow)
+                  .flatMap(id ->
+                    useCase.getAll(id)
+                    .switchIfEmpty(Mono.error(new Throwable()))
+                    .collectList()
+                    .flatMap(inventoryViews ->
+                            ServerResponse.ok()
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(BodyInserters.fromValue(inventoryViews)))
+                  )
                 .onErrorResume(throwable -> ServerResponse.noContent().build())
     );
   }
@@ -36,13 +42,17 @@ public class GetRouter {
     return route(
             GET("/buys"),
             request ->
-              useCase.getAll(request.queryParam("id"))
-                .switchIfEmpty(Mono.error(new Throwable()))
-                .collectList()
-                .flatMap(inventoryViews ->
-                        ServerResponse.ok()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromValue(inventoryViews)))
+              Mono.just(request.queryParam("id"))
+                .map(Optional::orElseThrow)
+                .flatMap(id ->
+                  useCase.getAll(id)
+                  .switchIfEmpty(Mono.error(new Throwable()))
+                  .collectList()
+                  .flatMap(inventoryViews ->
+                          ServerResponse.ok()
+                          .contentType(MediaType.APPLICATION_JSON)
+                          .body(BodyInserters.fromValue(inventoryViews)))
+                )
                 .onErrorResume(throwable -> ServerResponse.noContent().build())
     );
   }

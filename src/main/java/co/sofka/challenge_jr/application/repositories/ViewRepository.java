@@ -3,7 +3,6 @@ package co.sofka.challenge_jr.application.repositories;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.sofka.challenge_jr.application.repositories.models.Event;
 import co.sofka.challenge_jr.application.repositories.models.InventoryView;
-import co.sofka.challenge_jr.application.repositories.models.ProductView;
 import co.sofka.challenge_jr.business.gateways.DomainRepository;
 import co.sofka.challenge_jr.domain.Inventory;
 import com.google.gson.Gson;
@@ -15,11 +14,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public class MongoRepository implements DomainRepository {
+public class ViewRepository implements DomainRepository {
   private final ReactiveMongoTemplate template;
   private final Gson gson = new Gson();
 
-  public MongoRepository(ReactiveMongoTemplate template) {
+  public ViewRepository(ReactiveMongoTemplate template) {
     this.template = template;
   }
 
