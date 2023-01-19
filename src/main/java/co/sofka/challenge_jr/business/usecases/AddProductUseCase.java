@@ -31,7 +31,6 @@ public class AddProductUseCase implements CommandExecutor<AddProduct> {
                   );
 
                   inventory.addProduct(
-                          new ProductID(command.getProductID()),
                           new Name(command.getName()),
                           new InInventory(command.getInInventory()),
                           new Enabled(command.getEnabled()),

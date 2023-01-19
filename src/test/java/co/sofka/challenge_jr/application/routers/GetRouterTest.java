@@ -51,7 +51,7 @@ class GetRouterTest {
           .uri(uriBuilder ->
             uriBuilder
               .path("/products")
-              .queryParam("id", "1")
+              .queryParam("idInventory", "1")
               .build()
           )
           .exchange()
@@ -66,7 +66,7 @@ class GetRouterTest {
             .uri(uriBuilder ->
                     uriBuilder
                     .path("/products")
-                    .queryParam("id", "2")
+                    .queryParam("idInventory", "2")
                     .build()
             )
             .exchange()
@@ -87,7 +87,7 @@ class GetRouterTest {
             .uri(uriBuilder ->
                     uriBuilder
                     .path("/buys")
-                    .queryParam("id", "1")
+                    .queryParam("idInventory", "1")
                     .build()
             )
             .exchange()
@@ -102,7 +102,7 @@ class GetRouterTest {
             .uri(uriBuilder ->
                     uriBuilder
                     .path("/buys")
-                    .queryParam("id", "2")
+                    .queryParam("idInventory", "2")
                     .build()
             )
             .exchange()

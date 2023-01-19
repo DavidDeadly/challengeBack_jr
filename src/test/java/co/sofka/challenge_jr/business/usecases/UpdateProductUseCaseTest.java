@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class UpdateProductUseCaseTest {
   public static final String INVENTORY_ID = "1";
-  public static final String PRODUCT_ID = "1";
   @Mock
   private DomainRepository repository;
 
@@ -31,22 +30,22 @@ class UpdateProductUseCaseTest {
 
   @Test
   void updateProductUseCase() {
+    InventoryCreated inventoryCreated = new InventoryCreated("sofka");
+    ProductAdded productAdded = new ProductAdded("LAPTOP", 50, true, 1, 10);
 
     UpdateProduct updateProductCom = new UpdateProduct(
             INVENTORY_ID,
-            PRODUCT_ID,
+            productAdded.getProductID(),
             500,
             "PC",
             2,
             50
     );
 
-    InventoryCreated inventoryCreated = new InventoryCreated("sofka");
-    ProductAdded productAdded = new ProductAdded(PRODUCT_ID, "LAPTOP", 50, true, 1, 10);
-    ProductRenamed productRenamed = new ProductRenamed(PRODUCT_ID, updateProductCom.getName());
-    InventoryProductUpdated inventoryProductUpdated = new InventoryProductUpdated(PRODUCT_ID, updateProductCom.getInInventory());
-    ProductMinUpdated productMinUpdated = new ProductMinUpdated(PRODUCT_ID, updateProductCom.getMin());
-    ProductMaxUpdated productMaxUpdated = new ProductMaxUpdated(PRODUCT_ID, updateProductCom.getMax());
+    ProductRenamed productRenamed = new ProductRenamed(productAdded.getProductID(), updateProductCom.getName());
+    InventoryProductUpdated inventoryProductUpdated = new InventoryProductUpdated(productAdded.getProductID(), updateProductCom.getInInventory());
+    ProductMinUpdated productMinUpdated = new ProductMinUpdated(productAdded.getProductID(), updateProductCom.getMin());
+    ProductMaxUpdated productMaxUpdated = new ProductMaxUpdated(productAdded.getProductID(), updateProductCom.getMax());
 
     BDDMockito.when(repository.findById(BDDMockito.anyString()))
             .thenReturn(Flux.just(inventoryCreated, productAdded));

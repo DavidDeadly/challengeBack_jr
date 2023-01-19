@@ -5,7 +5,6 @@ import java.util.UUID;
 
 public class AddProduct extends Command {
   private final String inventoryID;
-  private final String productID = UUID.randomUUID().toString();
   private final String name;
   private final Integer inInventory;
   private final Boolean enabled;
@@ -23,10 +22,6 @@ public class AddProduct extends Command {
 
   public String getInventoryID() {
     return inventoryID;
-  }
-
-  public String getProductID() {
-    return productID;
   }
 
   public String getName() {

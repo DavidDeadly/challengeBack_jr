@@ -42,9 +42,7 @@ public class BuyProductsUseCase implements CommandExecutor<BuyProducts> {
                   ).collect(Collectors.toSet());
 
                   inventory.buyProducts(
-                          new BuyID(command.getBuyID()),
                           productsBuys,
-                          new DateBuy(command.getDate()),
                           new ClientName(command.getClientName()),
                           new IDType(IDTypeEnum.valueOf(command.getIdType())),
                           new IDClient(command.getIdClient())

@@ -36,7 +36,7 @@ class DeleteProductUseCaseTest {
     DeleteProduct deleteProductCom = new DeleteProduct(INVENTORY_ID, PRODUCT_ID);
 
     InventoryCreated inventoryCreated = new InventoryCreated("sofka");
-    ProductAdded productAdded = new ProductAdded(PRODUCT_ID, "PC", 500, true, 50, 1);
+    ProductAdded productAdded = new ProductAdded("PC", 500, true, 50, 1);
     ProductDeleted productDeleted = new ProductDeleted(PRODUCT_ID);
 
 

@@ -41,11 +41,9 @@ class BuyProductsUseCaseTest {
     BuyProducts buyProductsCom = new BuyProducts(ID_INVENTORY, productsToBuy, "David", "CC", "1000293315");
 
     InventoryCreated inventoryCreated = new InventoryCreated("sofka");
-    ProductAdded productAddedPC = new ProductAdded(PRODUCT_ID, "PC", 500, true, 8, 200);
+    ProductAdded productAddedPC = new ProductAdded("PC", 500, true, 8, 200);
     ProductsBought productsBought = new ProductsBought(
-            buyProductsCom.getBuyID(),
             productsToBuy,
-            buyProductsCom.getDate(),
             buyProductsCom.getClientName(),
             buyProductsCom.getIdType(),
             buyProductsCom.getIdClient()

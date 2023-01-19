@@ -14,8 +14,8 @@ public class GetBuysUseCase {
     this.repository = repository;
   }
 
-  public Flux<BuyView> getAll(String id) {
-    return repository.findInventoryById(id)
+  public Flux<BuyView> getAll(String inventoryID) {
+    return repository.findInventoryById(inventoryID)
             .flatMapIterable(InventoryView::getBuys);
   }
 }

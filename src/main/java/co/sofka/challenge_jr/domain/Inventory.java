@@ -78,8 +78,8 @@ public class Inventory extends AggregateEvent<InventoryID> {
     return inventoryView;
   }
 
-  public void addProduct(ProductID productID, Name name, InInventory inInventory, Enabled enabled, Min min, Max max) {
-    appendChange(new ProductAdded(productID.value(), name.value(), inInventory.value(), enabled.value(), min.value(), max.value())).apply();
+  public void addProduct(Name name, InInventory inInventory, Enabled enabled, Min min, Max max) {
+    appendChange(new ProductAdded(name.value(), inInventory.value(), enabled.value(), min.value(), max.value())).apply();
   }
 
   public void deleteProduct(ProductID productID) {
@@ -102,11 +102,11 @@ public class Inventory extends AggregateEvent<InventoryID> {
     appendChange(new ProductMinUpdated(productID.value(), min.value())).apply();
   }
 
-  public void buyProducts(BuyID buyID, Set<ProductsBuy> productsBuys, DateBuy date, ClientName clientName, IDType idType, IDClient idClient) {
+  public void buyProducts(Set<ProductsBuy> productsBuys, ClientName clientName, IDType idType, IDClient idClient) {
     final var productsToBuy = productsBuys.stream().map(productsBuy ->
             new ProductsBuyView(productsBuy.value().idProduct(), productsBuy.value().quantity())
         ).collect(Collectors.toSet());
-    appendChange(new ProductsBought(buyID.value(), productsToBuy, date.value(), clientName.value(), idType.value().name(), idClient.value())).apply();
+    appendChange(new ProductsBought(productsToBuy, clientName.value(), idType.value().name(), idClient.value())).apply();
   }
 
   public Optional<Product> getProductById(String productID) {

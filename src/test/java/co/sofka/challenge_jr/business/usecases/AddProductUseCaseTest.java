@@ -35,7 +35,6 @@ class AddProductUseCaseTest {
 
     InventoryCreated inventoryCreated = new InventoryCreated("sofka");
     ProductAdded productAdded = new ProductAdded(
-            addProductCom.getProductID(),
             addProductCom.getName(),
             addProductCom.getInInventory(),
             addProductCom.getEnabled(),
@@ -61,7 +60,6 @@ class AddProductUseCaseTest {
               ProductAdded event = (ProductAdded) events.get(0);
 
               assertEquals(1, events.size());
-              assertEquals(addProductCom.getProductID(), event.getProductID());
               assertEquals(addProductCom.getName(), event.getName());
             })
             .expectComplete()
