@@ -1,0 +1,172 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AddProductUseCase</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">co.sofka.challenge_jr.business.usecases</a>
+</div>
+
+<h1>Coverage Summary for Class: AddProductUseCase (co.sofka.challenge_jr.business.usecases)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AddProductUseCase</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/19)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AddProductUseCase$MockitoMock$udLEa04U</td>
+  </tr>
+  <tr>
+    <td class="name">AddProductUseCase$MockitoMock$udLEa04U$auxiliary$4EYd2Mje</td>
+  </tr>
+  <tr>
+    <td class="name">AddProductUseCase$MockitoMock$udLEa04U$auxiliary$OaHsMLvT</td>
+  </tr>
+  <tr>
+    <td class="name">AddProductUseCase$MockitoMock$udLEa04U$auxiliary$r9is686m</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/19)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package co.sofka.challenge_jr.business.usecases;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import co.com.sofka.domain.generic.DomainEvent;
+<i class="no-highlight">4</i>&nbsp;import co.sofka.challenge_jr.business.gateways.CommandExecutor;
+<i class="no-highlight">5</i>&nbsp;import co.sofka.challenge_jr.business.gateways.DomainRepository;
+<i class="no-highlight">6</i>&nbsp;import co.sofka.challenge_jr.domain.Inventory;
+<i class="no-highlight">7</i>&nbsp;import co.sofka.challenge_jr.domain.commands.AddProduct;
+<i class="no-highlight">8</i>&nbsp;import co.sofka.challenge_jr.domain.values.*;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.stereotype.Component;
+<i class="no-highlight">10</i>&nbsp;import reactor.core.publisher.Flux;
+<i class="no-highlight">11</i>&nbsp;import reactor.core.publisher.Mono;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;@Component
+<i class="no-highlight">14</i>&nbsp;public class AddProductUseCase implements CommandExecutor&lt;AddProduct&gt; {
+<i class="no-highlight">15</i>&nbsp;  private final DomainRepository repository;
+<i class="no-highlight">16</i>&nbsp;
+<b class="fc"><i class="no-highlight">17</i>&nbsp;  public AddProductUseCase(DomainRepository repository) {</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;    this.repository = repository;</b>
+<i class="no-highlight">19</i>&nbsp;  }
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;  @Override
+<i class="no-highlight">22</i>&nbsp;  public Flux&lt;DomainEvent&gt; applyCommand(AddProduct addProductCommand) {
+<b class="fc"><i class="no-highlight">23</i>&nbsp;    return Mono.just(addProductCommand)</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;            .flatMapMany(command -&gt;</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;                repository.findById(command.getInventoryID())</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;                .collectList()</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;                .flatMapIterable(events -&gt; {</b>
+<b class="fc"><i class="no-highlight">28</i>&nbsp;                  Inventory inventory = Inventory.from(</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;                          new InventoryID(command.getInventoryID()),</b>
+<i class="no-highlight">30</i>&nbsp;                          events
+<i class="no-highlight">31</i>&nbsp;                  );
+<i class="no-highlight">32</i>&nbsp;
+<b class="fc"><i class="no-highlight">33</i>&nbsp;                  inventory.addProduct(</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;                          new ProductID(command.getProductID()),</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;                          new Name(command.getName()),</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;                          new InInventory(command.getInInventory()),</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;                          new Enabled(command.getEnabled()),</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;                          new Min(command.getMin()),</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;                          new Max(command.getMax())</b>
+<i class="no-highlight">40</i>&nbsp;                  );
+<i class="no-highlight">41</i>&nbsp;
+<b class="fc"><i class="no-highlight">42</i>&nbsp;                  new Thread(() -&gt; repository.saveView(inventory).subscribe()).start();</b>
+<i class="no-highlight">43</i>&nbsp;
+<b class="fc"><i class="no-highlight">44</i>&nbsp;                  return inventory.getUncommittedChanges();</b>
+<i class="no-highlight">45</i>&nbsp;                }))
+<b class="fc"><i class="no-highlight">46</i>&nbsp;            .flatMap(repository::saveEvent);</b>
+<i class="no-highlight">47</i>&nbsp;  }
+<i class="no-highlight">48</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-19 11:52</div>
+</div>
+</body>
+</html>

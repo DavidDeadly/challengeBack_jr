@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > MongoRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">co.sofka.challenge_jr.application.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: MongoRepository (co.sofka.challenge_jr.application.repositories)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MongoRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MongoRepository$MockitoMock$nS10nDOH</td>
+  </tr>
+  <tr>
+    <td class="name">MongoRepository$MockitoMock$nS10nDOH$auxiliary$2StVRpbd</td>
+  </tr>
+  <tr>
+    <td class="name">MongoRepository$MockitoMock$nS10nDOH$auxiliary$bPyKxQeS</td>
+  </tr>
+  <tr>
+    <td class="name">MongoRepository$MockitoMock$nS10nDOH$auxiliary$ccN5U5mZ</td>
+  </tr>
+  <tr>
+    <td class="name">MongoRepository$MockitoMock$nS10nDOH$auxiliary$jHhfl5Up</td>
+  </tr>
+  <tr>
+    <td class="name">MongoRepository$MockitoMock$nS10nDOH$auxiliary$Pz1otbqe</td>
+  </tr>
+  <tr>
+    <td class="name">MongoRepository$MockitoMock$nS10nDOH$auxiliary$RqQ7maLz</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package co.sofka.challenge_jr.application.repositories;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import co.com.sofka.domain.generic.DomainEvent;
+<i class="no-highlight">4</i>&nbsp;import co.sofka.challenge_jr.application.repositories.models.Event;
+<i class="no-highlight">5</i>&nbsp;import co.sofka.challenge_jr.application.repositories.models.InventoryView;
+<i class="no-highlight">6</i>&nbsp;import co.sofka.challenge_jr.business.gateways.DomainRepository;
+<i class="no-highlight">7</i>&nbsp;import co.sofka.challenge_jr.domain.Inventory;
+<i class="no-highlight">8</i>&nbsp;import com.google.gson.Gson;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+<i class="no-highlight">10</i>&nbsp;import org.springframework.data.mongodb.core.query.Criteria;
+<i class="no-highlight">11</i>&nbsp;import org.springframework.data.mongodb.core.query.Query;
+<i class="no-highlight">12</i>&nbsp;import org.springframework.stereotype.Repository;
+<i class="no-highlight">13</i>&nbsp;import reactor.core.publisher.Flux;
+<i class="no-highlight">14</i>&nbsp;import reactor.core.publisher.Mono;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;@Repository
+<i class="no-highlight">17</i>&nbsp;public class MongoRepository implements DomainRepository {
+<i class="no-highlight">18</i>&nbsp;  private final ReactiveMongoTemplate template;
+<b class="nc"><i class="no-highlight">19</i>&nbsp;  private final Gson gson = new Gson();</b>
+<i class="no-highlight">20</i>&nbsp;
+<b class="nc"><i class="no-highlight">21</i>&nbsp;  public MongoRepository(ReactiveMongoTemplate template) {</b>
+<b class="nc"><i class="no-highlight">22</i>&nbsp;    this.template = template;</b>
+<i class="no-highlight">23</i>&nbsp;  }
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;  @Override
+<i class="no-highlight">26</i>&nbsp;  public Flux&lt;DomainEvent&gt; findById(String id) {
+<b class="nc"><i class="no-highlight">27</i>&nbsp;    return</b>
+<b class="nc"><i class="no-highlight">28</i>&nbsp;      Mono.just(id)</b>
+<b class="nc"><i class="no-highlight">29</i>&nbsp;      .map(aggId -&gt;</b>
+<b class="nc"><i class="no-highlight">30</i>&nbsp;        new Query(Criteria.where(&quot;aggregateId&quot;).is(aggId))</b>
+<i class="no-highlight">31</i>&nbsp;      )
+<b class="nc"><i class="no-highlight">32</i>&nbsp;      .flatMapMany(query -&gt; template.find(query, Event.class))</b>
+<b class="nc"><i class="no-highlight">33</i>&nbsp;      .map(event -&gt; {</b>
+<i class="no-highlight">34</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">35</i>&nbsp;          return (DomainEvent) gson.fromJson(event.getEventBody(), Class.forName(event.getTypeName()));</b>
+<b class="nc"><i class="no-highlight">36</i>&nbsp;        } catch(ClassNotFoundException err) {</b>
+<b class="nc"><i class="no-highlight">37</i>&nbsp;          throw new IllegalArgumentException(err);</b>
+<i class="no-highlight">38</i>&nbsp;        }
+<i class="no-highlight">39</i>&nbsp;      });
+<i class="no-highlight">40</i>&nbsp;  }
+<i class="no-highlight">41</i>&nbsp;
+<i class="no-highlight">42</i>&nbsp;  @Override
+<i class="no-highlight">43</i>&nbsp;  public Mono&lt;DomainEvent&gt; saveEvent(DomainEvent domainEvent) {
+<b class="nc"><i class="no-highlight">44</i>&nbsp;    return</b>
+<b class="nc"><i class="no-highlight">45</i>&nbsp;      Mono.just(domainEvent)</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;      .map(event -&gt; new Event(</b>
+<b class="nc"><i class="no-highlight">47</i>&nbsp;              event.aggregateRootId(),</b>
+<b class="nc"><i class="no-highlight">48</i>&nbsp;              gson.toJson(event),</b>
+<b class="nc"><i class="no-highlight">49</i>&nbsp;              event.getClass().getCanonicalName()</b>
+<i class="no-highlight">50</i>&nbsp;      ))
+<b class="nc"><i class="no-highlight">51</i>&nbsp;      .flatMap(template::save)</b>
+<b class="nc"><i class="no-highlight">52</i>&nbsp;      .map(ev -&gt; domainEvent);</b>
+<i class="no-highlight">53</i>&nbsp;  }
+<i class="no-highlight">54</i>&nbsp;
+<i class="no-highlight">55</i>&nbsp;  @Override
+<i class="no-highlight">56</i>&nbsp;  public Mono&lt;InventoryView&gt; saveView(Inventory inventory) {
+<b class="nc"><i class="no-highlight">57</i>&nbsp;    return Mono.just(inventory)</b>
+<b class="nc"><i class="no-highlight">58</i>&nbsp;            .map(Inventory::toInventoryView)</b>
+<b class="nc"><i class="no-highlight">59</i>&nbsp;            .flatMap(template::save);</b>
+<i class="no-highlight">60</i>&nbsp;  }
+<i class="no-highlight">61</i>&nbsp;
+<i class="no-highlight">62</i>&nbsp;  @Override
+<i class="no-highlight">63</i>&nbsp;  public Mono&lt;InventoryView&gt; findInventoryById(String id) {
+<b class="nc"><i class="no-highlight">64</i>&nbsp;    return Mono.just(id)</b>
+<b class="nc"><i class="no-highlight">65</i>&nbsp;            .map(strId -&gt; new Query(Criteria.where(&quot;id&quot;).is(strId)))</b>
+<b class="nc"><i class="no-highlight">66</i>&nbsp;            .flatMap(query -&gt; template.findOne(query, InventoryView.class));</b>
+<i class="no-highlight">67</i>&nbsp;  }
+<i class="no-highlight">68</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-19 11:52</div>
+</div>
+</body>
+</html>

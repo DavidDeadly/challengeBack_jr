@@ -1,0 +1,193 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UpdateProductUseCase</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">co.sofka.challenge_jr.business.usecases</a>
+</div>
+
+<h1>Coverage Summary for Class: UpdateProductUseCase (co.sofka.challenge_jr.business.usecases)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UpdateProductUseCase</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/28)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UpdateProductUseCase$MockitoMock$Nl5efMu9</td>
+  </tr>
+  <tr>
+    <td class="name">UpdateProductUseCase$MockitoMock$Nl5efMu9$auxiliary$47lJ6uw0</td>
+  </tr>
+  <tr>
+    <td class="name">UpdateProductUseCase$MockitoMock$Nl5efMu9$auxiliary$IDBJ7pS4</td>
+  </tr>
+  <tr>
+    <td class="name">UpdateProductUseCase$MockitoMock$Nl5efMu9$auxiliary$xryRAwE7</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/28)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package co.sofka.challenge_jr.business.usecases;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import co.com.sofka.domain.generic.DomainEvent;
+<i class="no-highlight">4</i>&nbsp;import co.sofka.challenge_jr.business.gateways.CommandExecutor;
+<i class="no-highlight">5</i>&nbsp;import co.sofka.challenge_jr.business.gateways.DomainRepository;
+<i class="no-highlight">6</i>&nbsp;import co.sofka.challenge_jr.domain.Inventory;
+<i class="no-highlight">7</i>&nbsp;import co.sofka.challenge_jr.domain.Product;
+<i class="no-highlight">8</i>&nbsp;import co.sofka.challenge_jr.domain.commands.UpdateProduct;
+<i class="no-highlight">9</i>&nbsp;import co.sofka.challenge_jr.domain.values.*;
+<i class="no-highlight">10</i>&nbsp;import org.springframework.stereotype.Component;
+<i class="no-highlight">11</i>&nbsp;import reactor.core.publisher.Flux;
+<i class="no-highlight">12</i>&nbsp;import reactor.core.publisher.Mono;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;import java.util.Optional;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;@Component
+<i class="no-highlight">17</i>&nbsp;public class UpdateProductUseCase implements CommandExecutor&lt;UpdateProduct&gt; {
+<i class="no-highlight">18</i>&nbsp;  private final DomainRepository repository;
+<i class="no-highlight">19</i>&nbsp;
+<b class="fc"><i class="no-highlight">20</i>&nbsp;  public UpdateProductUseCase(DomainRepository repository) {</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;    this.repository = repository;</b>
+<i class="no-highlight">22</i>&nbsp;  }
+<i class="no-highlight">23</i>&nbsp;
+<i class="no-highlight">24</i>&nbsp;  @Override
+<i class="no-highlight">25</i>&nbsp;  public Flux&lt;DomainEvent&gt; applyCommand(UpdateProduct updateProductCommand) {
+<b class="fc"><i class="no-highlight">26</i>&nbsp;    return Mono.just(updateProductCommand)</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;            .flatMapMany(command -&gt;</b>
+<b class="fc"><i class="no-highlight">28</i>&nbsp;                    repository</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;                    .findById(command.getInventoryID())</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;                    .collectList()</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;                    .flatMapIterable(events -&gt; {</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;                      Inventory inventory = Inventory.from(</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;                              new InventoryID(command.getInventoryID()),</b>
+<i class="no-highlight">34</i>&nbsp;                              events
+<i class="no-highlight">35</i>&nbsp;                      );
+<i class="no-highlight">36</i>&nbsp;
+<b class="fc"><i class="no-highlight">37</i>&nbsp;                      final ProductID productId = new ProductID(command.getProductID());</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;                      Optional&lt;Product&gt; productById = inventory.getProductById(productId.value());</b>
+<i class="no-highlight">39</i>&nbsp;
+<b class="fc"><i class="no-highlight">40</i>&nbsp;                      productById.ifPresent(product -&gt; {</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;                        final String name = command.getName();</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;                        final Integer inInventory = command.getInInventory();</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;                        final Integer min = command.getMin();</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;                        final Integer max = command.getMax();</b>
+<i class="no-highlight">45</i>&nbsp;
+<b class="fc"><i class="no-highlight">46</i>&nbsp;                        if(!product.Name().value().equals(name) &amp;&amp; name != null) {</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;                          inventory.renameProduct(productId, new Name(name));</b>
+<i class="no-highlight">48</i>&nbsp;                        }
+<i class="no-highlight">49</i>&nbsp;
+<b class="fc"><i class="no-highlight">50</i>&nbsp;                        if(!product.InInventory().value().equals(inInventory) &amp;&amp; inInventory != null) {</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;                          inventory.updateProductInventory(productId, new InInventory(inInventory));</b>
+<i class="no-highlight">52</i>&nbsp;                        }
+<i class="no-highlight">53</i>&nbsp;
+<b class="fc"><i class="no-highlight">54</i>&nbsp;                        if(!product.Min().value().equals(min) &amp;&amp; min != null) {</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;                          inventory.updateProductMin(productId, new Min(min));</b>
+<i class="no-highlight">56</i>&nbsp;                        }
+<i class="no-highlight">57</i>&nbsp;
+<b class="fc"><i class="no-highlight">58</i>&nbsp;                        if(!product.Max().value().equals(max) &amp;&amp; max != null) {</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;                          inventory.updateProductMax(productId, new Max(max));</b>
+<i class="no-highlight">60</i>&nbsp;                        }
+<i class="no-highlight">61</i>&nbsp;                      });
+<i class="no-highlight">62</i>&nbsp;
+<b class="fc"><i class="no-highlight">63</i>&nbsp;                      new Thread(() -&gt; repository.saveView(inventory).subscribe()).start();</b>
+<i class="no-highlight">64</i>&nbsp;
+<b class="fc"><i class="no-highlight">65</i>&nbsp;                      return inventory.getUncommittedChanges();</b>
+<i class="no-highlight">66</i>&nbsp;                    }))
+<b class="fc"><i class="no-highlight">67</i>&nbsp;            .flatMap(repository::saveEvent);</b>
+<i class="no-highlight">68</i>&nbsp;  }
+<i class="no-highlight">69</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-19 11:52</div>
+</div>
+</body>
+</html>
