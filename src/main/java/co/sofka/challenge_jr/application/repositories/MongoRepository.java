@@ -14,11 +14,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public class ViewRepository implements DomainRepository {
+public class MongoRepository implements DomainRepository {
   private final ReactiveMongoTemplate template;
   private final Gson gson = new Gson();
 
-  public ViewRepository(ReactiveMongoTemplate template) {
+  public MongoRepository(ReactiveMongoTemplate template) {
     this.template = template;
   }
 

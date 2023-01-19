@@ -1,6 +1,6 @@
 package co.sofka.challenge_jr.business.usecases;
 
-import co.sofka.challenge_jr.application.repositories.ViewRepository;
+import co.sofka.challenge_jr.application.repositories.MongoRepository;
 import co.sofka.challenge_jr.application.repositories.models.InventoryView;
 import co.sofka.challenge_jr.application.repositories.models.ProductView;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GetProductsUseCaseTest {
   public static final String INVENTORY_ID = "1";
   @Mock
-  private ViewRepository repository;
+  private MongoRepository repository;
 
   @InjectMocks
   private GetProductsUseCase useCase;
@@ -52,7 +52,7 @@ class GetProductsUseCaseTest {
   }
 
 
-  Set<ProductView> createProducts(){
+  private Set<ProductView> createProducts(){
     ProductView pc = new ProductView("1", "PC", 500, true, 8, 2000);
     ProductView book = new ProductView("2", "Book", 50, true, 1, 10);
     ProductView table = new ProductView("3", "Table", 20, true, 1, 5);

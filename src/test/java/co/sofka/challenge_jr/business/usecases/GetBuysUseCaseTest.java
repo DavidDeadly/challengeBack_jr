@@ -1,6 +1,6 @@
 package co.sofka.challenge_jr.business.usecases;
 
-import co.sofka.challenge_jr.application.repositories.ViewRepository;
+import co.sofka.challenge_jr.application.repositories.MongoRepository;
 import co.sofka.challenge_jr.application.repositories.models.BuyView;
 import co.sofka.challenge_jr.application.repositories.models.InventoryView;
 import co.sofka.challenge_jr.application.repositories.models.ProductsBuyView;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 class GetBuysUseCaseTest {
   @Mock
-  private ViewRepository repository;
+  private MongoRepository repository;
 
   @InjectMocks
   private  GetBuysUseCase useCase;
@@ -60,7 +60,7 @@ class GetBuysUseCaseTest {
     BDDMockito.verify(repository).findInventoryById(BDDMockito.anyString());
   }
 
-  Set<BuyView> createBuys(){
+  private Set<BuyView> createBuys() {
     HashSet<ProductsBuyView> productsDavid = new HashSet<>(Arrays.asList(
             new ProductsBuyView("1", 20),
             new ProductsBuyView("2", 50)
