@@ -57,7 +57,7 @@ public class GetRouter {
     return route(
             GET("/products"),
             request ->
-              Mono.just(request.queryParam("idInventory"))
+              Mono.just(request.queryParam("inventoryID"))
                   .map(Optional::orElseThrow)
                   .flatMap(id ->
                     useCase.getAll(id)
@@ -103,7 +103,7 @@ public class GetRouter {
     return route(
             GET("/buys"),
             request ->
-              Mono.just(request.queryParam("idInventory"))
+              Mono.just(request.queryParam("inventoryID"))
                 .map(Optional::orElseThrow)
                 .flatMap(id ->
                   useCase.getAll(id)
