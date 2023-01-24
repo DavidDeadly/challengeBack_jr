@@ -79,7 +79,7 @@ class GetRouterTest {
   @Test
   void getBuys() {
 
-    Set<BuyView> buyViews = createBuys();
+    List<BuyView> buyViews = createBuys();
     BDDMockito.when(getBuysUseCase.getAll("1")).thenReturn(Flux.fromIterable(buyViews));
 
     webTestClient
@@ -119,20 +119,20 @@ class GetRouterTest {
     return new HashSet<>(Arrays.asList(pc, book, table, monitor));
   }
 
-  private Set<BuyView> createBuys(){
-    HashSet<ProductsBuyView> productsDavid = new HashSet<>(Arrays.asList(
+  private List<BuyView> createBuys(){
+    List<ProductsBuyView> productsDavid = Arrays.asList(
             new ProductsBuyView("1", 20),
             new ProductsBuyView("2", 50)
-    ));
+    );
     BuyView davidBuy = new BuyView(UUID.randomUUID().toString(), Date.from(Instant.now()), "CC", "1000293315", "David", productsDavid);
 
-    HashSet<ProductsBuyView> productsIsa = new HashSet<>(Arrays.asList(
+    List<ProductsBuyView> productsIsa = Arrays.asList(
             new ProductsBuyView("1", 10),
             new ProductsBuyView("2", 60),
             new ProductsBuyView("3", 100)
-    ));
+    );
     BuyView isaBuy = new BuyView(UUID.randomUUID().toString(), Date.from(Instant.now()), "CC", "1025891626", "Isa", productsIsa);
-    return new HashSet<>(Arrays.asList(davidBuy, isaBuy));
+    return Arrays.asList(davidBuy, isaBuy);
   }
 
 }

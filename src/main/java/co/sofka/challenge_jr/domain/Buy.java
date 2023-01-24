@@ -3,6 +3,8 @@ package co.sofka.challenge_jr.domain;
 import co.com.sofka.domain.generic.Entity;
 import co.sofka.challenge_jr.domain.values.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class Buy extends Entity<BuyID> {
@@ -10,9 +12,10 @@ public class Buy extends Entity<BuyID> {
   private IDType idType;
   private IDClient id;
   private ClientName clientName;
-  private Set<ProductsBuy> products;
+  private List<ProductsBuy> products;
 
-  public Buy(BuyID entityId, Set<ProductsBuy> products, DateBuy date, IDType idType, IDClient id, ClientName clientName) {
+  public Buy(BuyID entityId, List<ProductsBuy> products, DateBuy date, IDType idType, IDClient id,
+      ClientName clientName) {
     super(entityId);
     this.date = date;
     this.products = products;
@@ -37,7 +40,7 @@ public class Buy extends Entity<BuyID> {
     return clientName;
   }
 
-  public Set<ProductsBuy> Products() {
+  public List<ProductsBuy> Products() {
     return products;
   }
 }

@@ -4,19 +4,17 @@ import co.com.sofka.domain.generic.DomainEvent;
 import co.sofka.challenge_jr.application.repositories.models.ProductsBuyView;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class ProductsBought extends DomainEvent {
   private final String buyID = UUID.randomUUID().toString();
-  private final Set<ProductsBuyView> productsBuy;
+  private final List<ProductsBuyView> productsBuy;
   private final Date date = Date.from(Instant.now());
   private final String name;
   private final String idType;
   private final String idClient;
 
-  public ProductsBought(Set<ProductsBuyView> productsBuy, String name, String idType, String idClient) {
+  public ProductsBought(List<ProductsBuyView> productsBuy, String name, String idType, String idClient) {
     super("sofka.Inventory.ProductBought");
     this.productsBuy = productsBuy;
     this.name = name;
@@ -24,7 +22,7 @@ public class ProductsBought extends DomainEvent {
     this.idClient = idClient;
   }
 
-  public Set<ProductsBuyView> getProductsBuy() {
+  public List<ProductsBuyView> getProductsBuy() {
     return productsBuy;
   }
 

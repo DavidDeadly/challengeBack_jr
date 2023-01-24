@@ -11,13 +11,12 @@ import co.sofka.challenge_jr.domain.values.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Inventory extends AggregateEvent<InventoryID> {
   protected Name inventoryName;
-  protected Set<Product> products;
-  protected Set<Buy> buys;
+  protected List<Product> products;
+  protected List<Buy> buys;
 
   public Inventory(InventoryID entityId, Name inventoryName) {
     super(entityId);
@@ -43,7 +42,7 @@ public class Inventory extends AggregateEvent<InventoryID> {
             inventoryName.value()
     );
 
-    Set<ProductView> productViews = products.stream().map(product ->
+    List<ProductView> productViews = products.stream().map(product ->
       new ProductView(
         product.identity().value(),
         product.Name().value(),
@@ -52,14 +51,14 @@ public class Inventory extends AggregateEvent<InventoryID> {
         product.Min().value(),
         product.Max().value()
       )
-    ).collect(Collectors.toSet());
+    ).collect(Collectors.toList());
 
     inventoryView.setProducts(productViews);
 
-    Set<BuyView> buysView = buys.stream().map(buy -> {
-      Set<ProductsBuyView> productsBuyView = buy.Products().stream().map(productsBuy ->
+    List<BuyView> buysView = buys.stream().map(buy -> {
+      List<ProductsBuyView> productsBuyView = buy.Products().stream().map(productsBuy ->
         new ProductsBuyView(productsBuy.value().idProduct(), productsBuy.value().quantity())
-      ).collect(Collectors.toSet());
+      ).collect(Collectors.toList());
 
 
 
@@ -71,7 +70,7 @@ public class Inventory extends AggregateEvent<InventoryID> {
               buy.ClientName().value(),
               productsBuyView
               );
-    }).collect(Collectors.toSet());
+    }).collect(Collectors.toList());
 
 
     inventoryView.setBuys(buysView);
@@ -102,10 +101,10 @@ public class Inventory extends AggregateEvent<InventoryID> {
     appendChange(new ProductMinUpdated(productID.value(), min.value())).apply();
   }
 
-  public void buyProducts(Set<ProductsBuy> productsBuys, ClientName clientName, IDType idType, IDClient idClient) {
+  public void buyProducts(List<ProductsBuy> productsBuys, ClientName clientName, IDType idType, IDClient idClient) {
     final var productsToBuy = productsBuys.stream().map(productsBuy ->
             new ProductsBuyView(productsBuy.value().idProduct(), productsBuy.value().quantity())
-        ).collect(Collectors.toSet());
+        ).collect(Collectors.toList());
     appendChange(new ProductsBought(productsToBuy, clientName.value(), idType.value().name(), idClient.value())).apply();
   }
 

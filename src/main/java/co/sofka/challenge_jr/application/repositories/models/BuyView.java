@@ -3,6 +3,7 @@ package co.sofka.challenge_jr.application.repositories.models;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public class BuyView {
@@ -12,9 +13,9 @@ public class BuyView {
   private String idType;
   private String clientId;
   private String clientName;
-  private Set<ProductsBuyView> products;
+  private List<ProductsBuyView> products;
 
-  public BuyView(String buyId, Date date, String idType, String clientId, String clientName, Set<ProductsBuyView> products) {
+  public BuyView(String buyId, Date date, String idType, String clientId, String clientName, List<ProductsBuyView> products) {
     this.buyId = buyId;
     this.date = date;
     this.idType = idType;
@@ -66,11 +67,11 @@ public class BuyView {
     this.clientName = clientName;
   }
 
-  public Set<ProductsBuyView> getProducts() {
+  public List<ProductsBuyView> getProducts() {
     return products;
   }
 
-  public void setProducts(Set<ProductsBuyView> products) {
+  public void setProducts(List<ProductsBuyView> products) {
     this.products = products;
   }
 }

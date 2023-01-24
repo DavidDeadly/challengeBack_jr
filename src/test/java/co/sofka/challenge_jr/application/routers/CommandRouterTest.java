@@ -18,6 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -135,7 +136,7 @@ class CommandRouterTest {
 
   @Test
   void buyProducts() {
-    BuyProducts buyProductsCom = new BuyProducts("1", new HashSet<>(), "David", "CC", "892374815");
+    BuyProducts buyProductsCom = new BuyProducts("1", new ArrayList<>(), "David", "CC", "892374815");
 
     BDDMockito.when(buyProductsUseCase.applyCommand(BDDMockito.any(BuyProducts.class)))
             .thenReturn(Flux.empty());

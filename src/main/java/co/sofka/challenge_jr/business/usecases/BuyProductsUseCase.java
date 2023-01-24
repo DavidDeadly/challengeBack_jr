@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,12 +36,12 @@ public class BuyProductsUseCase implements CommandExecutor<BuyProducts> {
                           events
                   );
 
-                  Set<ProductsBuy> productsBuys = command.getProductsBuy().stream().map(productsBuy ->
+                  List<ProductsBuy> productsBuys = command.getProductsBuy().stream().map(productsBuy ->
                           new ProductsBuy(
                                   productsBuy.getProductId(),
                                   productsBuy.getQuantity()
                           )
-                  ).collect(Collectors.toSet());
+                  ).collect(Collectors.toList());
 
                   inventory.buyProducts(
                           productsBuys,

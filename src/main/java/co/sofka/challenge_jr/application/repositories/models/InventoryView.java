@@ -3,15 +3,17 @@ package co.sofka.challenge_jr.application.repositories.models;
 import co.sofka.challenge_jr.domain.Inventory;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class InventoryView {
   @Id
   private String id;
   private String name;
-  private Set<ProductView> products = new HashSet<>();
-  private Set<BuyView> buys = new HashSet<>();
+  private List<ProductView> products = new ArrayList<>();
+  private List<BuyView> buys = new ArrayList<>();
 
   public InventoryView(String id, String name) {
     this.id = id;
@@ -37,19 +39,19 @@ public class InventoryView {
     this.name = name;
   }
 
-  public Set<ProductView> getProducts() {
+  public List<ProductView> getProducts() {
     return products;
   }
 
-  public void setProducts(Set<ProductView> products) {
+  public void setProducts(List<ProductView> products) {
     this.products = products;
   }
 
-  public Set<BuyView> getBuys() {
+  public List<BuyView> getBuys() {
     return buys;
   }
 
-  public void setBuys(Set<BuyView> buys) {
+  public void setBuys(List<BuyView> buys) {
     this.buys = buys;
   }
 }

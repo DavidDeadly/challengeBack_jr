@@ -4,17 +4,15 @@ import co.com.sofka.domain.generic.EventChange;
 import co.sofka.challenge_jr.domain.events.*;
 import co.sofka.challenge_jr.domain.values.*;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class InventoryChange extends EventChange {
   public InventoryChange(Inventory inventory) {
     apply((InventoryCreated event) -> {
       inventory.inventoryName = new Name(event.getInventoryName());
-      inventory.buys = new HashSet<>();
-      inventory.products = new HashSet<>();
+      inventory.buys = new ArrayList<>();
+      inventory.products = new ArrayList<>();
     });
 
     apply((ProductAdded event) -> {
@@ -58,9 +56,9 @@ public class InventoryChange extends EventChange {
         productById.ifPresent(product -> product.buy(productsBuy.getQuantity()));
       });
 
-      Set<ProductsBuy> productsBuys = event.getProductsBuy().stream()
+      List<ProductsBuy> productsBuys = event.getProductsBuy().stream()
               .map(productsBuyView -> new ProductsBuy(productsBuyView.getProductId(), productsBuyView.getQuantity()))
-              .collect(Collectors.toSet());
+              .collect(Collectors.toList());
 
 
       Buy buy = new Buy(

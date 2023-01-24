@@ -27,7 +27,7 @@ class GetProductsUseCaseTest {
 
   @Test
   void getProductsUseCase() {
-    Set<ProductView> products = createProducts();
+    List<ProductView> products = createProducts();
 
     InventoryView sofkaInventory = new InventoryView(INVENTORY_ID, "sofka");
     sofkaInventory.setProducts(products);
@@ -52,12 +52,12 @@ class GetProductsUseCaseTest {
   }
 
 
-  private Set<ProductView> createProducts(){
+  private List<ProductView> createProducts(){
     ProductView pc = new ProductView("1", "PC", 500, true, 8, 2000);
     ProductView book = new ProductView("2", "Book", 50, true, 1, 10);
     ProductView table = new ProductView("3", "Table", 20, true, 1, 5);
     ProductView monitor = new ProductView("4", "Monitor", 0, false, 1, 2);
-    return new HashSet<>(Arrays.asList(pc, book, table, monitor));
+    return new ArrayList<>(Arrays.asList(pc, book, table, monitor));
   }
 
 }

@@ -20,6 +20,7 @@ import reactor.test.StepVerifier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -36,7 +37,7 @@ class BuyProductsUseCaseTest {
 
   @Test
   void buyProductsUseCase() {
-    HashSet<ProductsBuyView> productsToBuy = new HashSet<>();
+    ArrayList<ProductsBuyView> productsToBuy = new ArrayList<>();
     productsToBuy.add(new ProductsBuyView(PRODUCT_ID, 20));
     BuyProducts buyProductsCom = new BuyProducts(ID_INVENTORY, productsToBuy, "David", "CC", "1000293315");
 
