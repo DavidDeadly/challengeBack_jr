@@ -67,7 +67,7 @@ public class InventoryChange extends EventChange {
               new DateBuy(event.getDate()),
               new IDType(IDTypeEnum.valueOf(event.getIdType())),
               new IDClient(event.getIdClient()),
-              new ClientName(event.getIdClient()));
+              new ClientName(event.getName()));
 
       inventory.buys.add(buy);
     });
